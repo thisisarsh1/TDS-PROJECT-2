@@ -1,0 +1,33 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "app/main.py",
+        "use": "@vercel/python",
+        "config": {
+          "maxLambdaSize": "15mb",
+          "runtime": "python3.10",
+          "includeFiles": "app/**",
+          "suppressResponse": false  
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/.*",  
+        "dest": "app/main.py",
+        "methods": ["POST"],
+        "headers": {
+          "Accept": "application/json",  
+          "Cache-Control": "no-store"  
+        }
+      },
+      {
+        "src": "/(.*)",
+        "dest": "app/main.py",
+        "headers": {
+          "Access-Control-Allow-Origin": "*"  
+        }
+      }
+    ]
+  }
